@@ -32,6 +32,10 @@ class OrderController extends Controller
     }
     public function showOrdersToAdmin()
     {
-        
+        $orders = Order::join('users', 'orders.user_id', '=', 'users.id')
+                ->join('products', 'orders.product_id', '=', 'products.id')
+                ->select('users.name AS Uname', 'users.email', 'products.name AS Pname', 'products.price')
+                ->get();
+        return $orders;
     }
 }
