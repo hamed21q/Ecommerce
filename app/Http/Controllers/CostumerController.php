@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\models\User;
+use App\Models\User;
 
-class RegistrationController extends Controller
+class CostumerController extends Controller
 {
     public function costumerRegister(Request $request)
     {
