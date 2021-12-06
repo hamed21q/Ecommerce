@@ -1,6 +1,7 @@
 <?php
     return [
-        1 => 'god' ,
-        2  => 'admin' ,
-        3  => 'costumer' 
+        'god'      => 1,
+        'admin'    => 2,
+        'salesman' => 3,
+        'costumer' => 4 
     ];

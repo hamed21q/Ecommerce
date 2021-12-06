@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Salesman;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\SalesmanConfirmation;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -64,6 +66,24 @@ class AdminController extends Controller
             return 'seccessfull';
         }else{
             return response('not found', 404);
+        }
+    }
+    public function salesmanRequest()
+    {
+        return SalesmanConfirmation::where('status_id', 1)->get();
+    }
+    public function proccess(SalesmanConfirmation $id, Request $request)
+    {
+        if((int)$request->status == 1)
+        {
+            $id->changeStatus(config('status.confirmed'));
+            $id->owner()->changeRole(config('roles.salesman'));
+            return $id->owner();
+        }
+        else if((int)$request->status == 0)
+        {
+            $id->changeStatus(config('status.rejected'));
+
         }
     }
 }

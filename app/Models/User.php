@@ -72,4 +72,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Product::class, 'orders', 'user_id', 'product_id');
     }
+    public function changeRole($value)
+    {
+        $this->role_id = $value;
+        $this->save();
+    }
 }

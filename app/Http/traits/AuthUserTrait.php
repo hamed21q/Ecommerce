@@ -4,6 +4,7 @@ namespace App\Http\Traits;
 
 use phpDocumentor\Reflection\Types\Boolean;
 use illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 trait AuthUserTrait
 {

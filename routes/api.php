@@ -29,11 +29,13 @@ Route::middleware('auth:sanctum')->group(callback: function(){
     Route::get('/wishlist',[App\Http\Controllers\WishListController::class, 'index']);
     Route::post('/order/product/{product_id}', [App\Http\Controllers\OrderController::class, 'register']);
     Route::get('/orders', [\App\Http\Controllers\OrderController::class, 'showCostumerOrders']);
+    //salesman request
+    Route::post('salesman-register',[App\Http\Controllers\SalesmanConfirmationController::class, 'confirm']);
+
 });
 
 //admin routes
 Route::middleware(['auth:sanctum', 'admin'])->group(callback: function () {
-    Route::post('salesman-register', [App\Http\Controllers\SalesmanController::class, 'salesmanRegister']);
     //product
     Route::put('product/{id}',[App\Http\Controllers\AdminController::class, 'update']);
     Route::delete('product/{id}', [App\Http\Controllers\AdminController::class, 'delete']);
@@ -43,6 +45,10 @@ Route::middleware(['auth:sanctum', 'admin'])->group(callback: function () {
     Route::delete('category/{id}', [App\Http\Controllers\CategoryController::class, 'delete']);
     //orders
     Route::get('/admin/orders', [\App\Http\Controllers\OrderController::class, 'showOrdersToAdmin']);
+    //
+    Route::post('/salesman-confirmation', [App\Http\Controllers\SalesmanController::class, 'salesmanRegister']);
+    Route::get('/show/salesman-requests', [\App\Http\Controllers\AdminController::class, 'salesmanRequest']);
+    Route::post('/salesman/{id}',[\App\Http\Controllers\AdminController::class, 'proccess']);
 });
 
 
@@ -61,6 +67,8 @@ Route::middleware(['auth:sanctum', 'salesman'])->group(callback: function () {
 //user authentication
 Route::post('/register', [App\Http\Controllers\RegistrationController::class, 'costumerRegister']);
 Route::post('/login', [App\Http\Controllers\LoginController::class, 'login']);
+Route::post('/forget-password', [App\Http\Controllers\ForgetPasswordController::class, 'index']);
+//salesman authentication
 
 //public product route
 Route::get('/show/products', [App\Http\Controllers\ProductController::class, 'index']);
