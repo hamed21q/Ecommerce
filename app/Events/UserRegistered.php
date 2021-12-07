@@ -2,16 +2,16 @@
 
 namespace App\Events;
 
-use App\Models\SalesmanConfirmation;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
+use App\Models\User;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class Salesman
+class UserRegistered
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,10 +20,19 @@ class Salesman
      *
      * @return void
      */
-    private $saleman;
-
-    public function __construct(SalesmanConfirmation $saleman)
+    public $user;
+    public function __construct(User $user)
     {
-        $this->saleman = $saleman;
+        $this->user = $user;
+    }
+
+    /**
+     * Get the channels the event should broadcast on.
+     *
+     * @return \Illuminate\Broadcasting\Channel|array
+     */
+    public function broadcastOn()
+    {
+        return new PrivateChannel('channel-name');
     }
 }

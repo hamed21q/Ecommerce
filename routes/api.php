@@ -4,7 +4,9 @@ use App\Http\Controllers\AuthController;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use App\Mail\UserRegisted;
 use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
@@ -65,7 +67,7 @@ Route::middleware(['auth:sanctum', 'salesman'])->group(callback: function () {
 });
 
 //user authentication
-Route::post('/register', [App\Http\Controllers\RegistrationController::class, 'costumerRegister']);
+Route::post('/register', [App\Http\Controllers\CostumerController::class, 'costumerRegister']);
 Route::post('/login', [App\Http\Controllers\LoginController::class, 'login']);
 Route::post('/forget-password', [App\Http\Controllers\ForgetPasswordController::class, 'index']);
 //salesman authentication
@@ -79,4 +81,9 @@ Route::get('/category/{category}', [App\Http\Controllers\ProductController::clas
 
 //to see products by tags
 Route::get('/tag/{tag}', [App\Http\Controllers\ProductController::class, 'showByTag']);
+
+
+Route::post('/email-test/{user}', function (User $user) {
+    Mail::to('hasanihamed360@gmail.com')->send(new UserRegisted($user));
+});
 

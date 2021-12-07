@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Events\UserRegistered;
+use App\Mail\UserRegisted;
+use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 
 class CostumerController extends Controller
@@ -27,6 +30,8 @@ class CostumerController extends Controller
             'user' => $user,
             'token' => $token 
         ];
+
+        event(new UserRegistered($user));
 
         return response($response, 201);
     }

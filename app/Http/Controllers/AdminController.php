@@ -83,7 +83,6 @@ class AdminController extends Controller
         else if((int)$request->status == 0)
         {
             $id->changeStatus(config('status.rejected'));
-
         }
     }
 }

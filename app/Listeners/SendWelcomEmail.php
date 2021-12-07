@@ -2,12 +2,13 @@
 
 namespace App\Listeners;
 
-use App\Events\Salesman;
+use App\Events\UserRegistered;
+use App\Mail\UserRegisted;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Models\User;
 
-class SalesmanConfirmed
+class SendWelcomEmail
 {
     /**
      * Create the event listener.
@@ -22,13 +23,11 @@ class SalesmanConfirmed
     /**
      * Handle the event.
      *
-     * @param  \App\Events\Salesman.php  $event
+     * @param  \App\Events\UserRegistered  $event
      * @return void
      */
-    public function handle(Salesman $event)
+    public function handle(UserRegistered $event)
     {
-        $user = User::find($event->saleman->user_id)->first();
-        $user->role_id = 3;
-        $user->save();
+        Mail::to($event->user->email)->send(new UserRegisted($event->user));
     }
 }
